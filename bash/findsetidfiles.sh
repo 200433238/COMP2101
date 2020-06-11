@@ -22,13 +22,20 @@
 echo "Setuid files:"
 echo "============="
 find / -type f -executable -perm -4000 -ls 2>/dev/null | sort -k 3
+#find in root location, search of files and executes permission uid file> 4000- is the value for uid file finding
+#disposing the error and sorting in the 3rd column.
 echo ""
 echo "Setgid files:"
 echo "============="
 find / -type f -executable -perm -2000 -ls 2>/dev/null | sort -k 6
+#Find in root, search for files and executes permission gid file as 2000 is the value for gid file,
+#disposing the unwanted output with 2>/dev/null and sorting in 6th column as required.
 echo ""
-echo "10 Largest file in the system:"
-echo "============================================="
+echo "The 10 largest regular files in the system:"
+echo "========================================="
 echo ""
-find / -type f -exec ls -alh --block-size=M {} \; 2>/dev/null | sort -hr -k 5 | head -n 10 | cut -d' ' -f5,3,9- | awk '{print $2, $1, $3, $4}'
-echo ""
+find / -type f -exec ls -alh --block-size=M {} \; 2>/dev/null | sort -hr -k 5 | head -n 10 | cut -d' ' -f9,5,3- | awk '{print $3, $4, $2, $1}'
+#Find in root, then search for files and executes lists of files in directory with all and long listing (alh),
+#after this conversion of size from bytes to MB. Sorting of 5th column then prints first 10 lines.
+#Next cut -d option cut columns
+#AWK command prints 3,4,2,1 column. as some has time in field so.
